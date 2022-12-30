@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_app/models/task.model.dart';
 import 'package:todoey_app/screens/add_task_screen.dart';
 import 'package:todoey_app/widgets/tasks_list.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
 
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(title: 'Learn Flutter'),
+    Task(title: 'Learn Python'),
+    Task(title: 'Learn Node Js'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +32,17 @@ class TasksScreen extends StatelessWidget {
                   top: Radius.circular(20),
                 ),
               ),
-              builder: (context) => AddTaskScreen(),
+              builder: (context) => AddTaskScreen(
+                addTaskCallBack: (newTaskTitle) {
+                  // print(newTaskTitle);
+                  setState(() {
+                    tasks.add(
+                      Task(title: newTaskTitle),
+                    );
+                  });
+                  Navigator.pop(context);
+                },
+              ),
             );
           },
           icon: Icon(
@@ -66,7 +87,7 @@ class TasksScreen extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -86,7 +107,9 @@ class TasksScreen extends StatelessWidget {
                   top: Radius.circular(20),
                 ),
               ),
-              child: TasksList(),
+              child: TasksList(
+                tasks: tasks,
+              ),
             ),
           ),
         ],
