@@ -4,11 +4,15 @@ import 'package:todoey_app/models/task.model.dart';
 import 'package:todoey_app/providers/task_provider.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key});
+  AddTaskScreen({super.key});
+
+  TextEditingController newTextTitleController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
     String? newTextTitle;
+
     return SingleChildScrollView(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
@@ -37,19 +41,38 @@ class AddTaskScreen extends StatelessWidget {
             ),
             TextField(
               textAlign: TextAlign.center,
+              controller: newTextTitleController,
               autofocus: true,
-              onChanged: (newText){
-                newTextTitle = newText;
-                
+              onChanged: (value){
+                 newTextTitle = value;   
               },
+              onSubmitted: (value){
+                if(newTextTitle == null){return;}
+                Provider.of<TaskProvider>(context, listen: false).addTask(newTextTitle!);
+                Navigator.pop(context);
+              },
+              
+              
+          
+              // onEditingComplete: (){
+              //   newTextTitle = newTextTitleController.text;
+              // },
+              
+              
+            
             ),
+
+           
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlueAccent,
               ),
               onPressed: () {
+                if(newTextTitle == null) {return;}
                 Provider.of<TaskProvider>(context, listen: false).addTask(newTextTitle!);
+                
                 Navigator.pop(context);
+
                 
               },
               child: Text('Add'),
