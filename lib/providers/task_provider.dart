@@ -7,4 +7,8 @@ class TaskProvider extends ChangeNotifier{
     Task(title: 'Learn Python'),
     Task(title: 'Learn Node Js'),
   ];
+
+  int get taskCount{
+    return tasks.length;
+  }
 }
