@@ -24,17 +24,7 @@ class TasksScreen extends StatelessWidget {
                   top: Radius.circular(20),
                 ),
               ),
-              builder: (context) => AddTaskScreen(
-                addTaskCallBack: (newTaskTitle) {
-                  // print(newTaskTitle);
-                  // setState(() {
-                  //   tasks.add(
-                  //     Task(title: newTaskTitle),
-                  //   );
-                  // });
-                  Navigator.pop(context);
-                },
-              ),
+              builder: (context) => AddTaskScreen(),
             );
           },
           icon: Icon(
